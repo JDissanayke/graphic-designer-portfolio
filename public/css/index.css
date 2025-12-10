@@ -1,0 +1,409 @@
+body {
+    font-family: "SUSE", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+
+}
+
+/* Orange bar styles */
+.text-content-container {
+    position: relative;
+}
+
+.orange-bar {
+    background-color: #f35a55;
+    position: absolute;
+    top: 62%;
+    /* Adjust this value to control vertical placement */
+    left: 0;
+    /* Offset it slightly to make it 'bleed' outside the text */
+    width: 100%;
+    /* Control how wide the bar is */
+    height: 35%;
+    /* Control how tall the bar is */
+    z-index: 1;
+}
+
+.overlay-text {
+    position: relative;
+    z-index: 2;
+    /* Ensures text is on top */
+    padding: 20px;
+
+}
+
+/* Post Card Grid Layout */
+.posts-grid-container {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.posts-row {
+    display: flex;
+    flex-wrap: nowrap;
+    /* Forces items to stay in one row */
+    justify-content: space-between;
+    gap: 15px;
+    /* Small gap between cards */
+    margin-bottom: 25px;
+    /* Space between rows */
+    align-items: stretch;
+    /* Ensures equal height */
+}
+
+.post-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    flex: 1 1 auto;
+    /* Grow and shrink based on content size */
+    min-width: 0;
+    /* Allow shrinking below content size if needed to fit row */
+}
+
+.post-card {
+    height: 100%;
+    position: relative;
+    /* For absolute positioning of body */
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    /* Rounded corners for modern look */
+    overflow: hidden;
+    /* Clips image at corners */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    /* Soft shadow */
+}
+
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    /* Elevated hover state */
+}
+
+.post-card-img-container {
+    width: 100%;
+    height: 250px;
+    /* Default fixed height */
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.post-card-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    /* Ensures image covers area without distortion */
+    transition: transform 0.5s ease;
+}
+
+.post-card:hover .post-card-img {
+    transform: scale(1.05);
+    /* Subtle zoom on hover */
+}
+
+.post-card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent black overlay */
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    /* Hidden by default */
+    transform: translateY(100%);
+    /* Slide down initially */
+    transition: all 0.3s ease-in-out;
+}
+
+.post-card:hover .post-card-body {
+    opacity: 1;
+    transform: translateY(0);
+    /* Slide up to show */
+}
+
+.post-card-text {
+    margin: 0;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #fff;
+    /* White text for contrast */
+}
+
+/* Responsiveness - Still 2 per row */
+@media (max-width: 768px) {
+    .posts-row {
+        gap: 10px;
+        /* Smaller gap on mobile */
+    }
+
+    .post-card-img-container {
+        height: 180px;
+        /* Smaller height for mobile */
+    }
+
+    .post-card-body {
+        padding: 10px;
+    }
+
+    .post-card-text {
+        font-size: 0.95rem;
+    }
+}
+
+/* Modern Navbar Styles */
+
+.menu-toggle {
+    display: none;
+    /* Hidden by default (desktop) */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1050;
+    /* Above overlay */
+    position: relative;
+    margin-right: 15px;
+    /* Spacing */
+}
+
+@media (max-width: 991.98px) {
+    .menu-toggle {
+        display: flex;
+        /* Show on mobile/tablet */
+    }
+}
+
+.menu-toggle .bar {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    /* Dark color for bars */
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hamburger Animation */
+.menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Mobile Overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    /* Glassmorphism */
+    z-index: 1040;
+    /* Below toggler */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    /* Click through when hidden */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.mobile-nav-link {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    text-decoration: none;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+/* Staggered Animation for links */
+.mobile-menu-overlay.active .mobile-nav-link {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.mobile-menu-overlay.active .mobile-nav-link:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.mobile-menu-overlay.active .mobile-nav-link:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+/* Hover effect */
+.mobile-nav-link:hover {
+    color: #f35a55;
+    /* Orange accent */
+    transform: scale(1.1);
+}
+
+/* =========================================
+   Project Modal Enhancements & UI/UX
+   ========================================= */
+
+/* Modal Content */
+.modal-content {
+    border: none;
+    border-radius: 16px;
+    /* Smooth rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    /* Deep shadow */
+    overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: none;
+    /* Clean header */
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.modal-title {
+    font-weight: 800;
+    /* Bolder title */
+    letter-spacing: -0.5px;
+}
+
+/* Modal Images */
+#modalImageContainer img {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+#modalAdditionalImages div {
+    transition: transform 0.2s;
+}
+
+#modalAdditionalImages div:hover {
+    transform: scale(1.03);
+}
+
+#modalDescription {
+    white-space: pre-line;
+    /* Preserves newlines but wraps text */
+    word-wrap: break-word;
+    /* Breaks long words */
+    overflow-wrap: break-word;
+    font-weight: 400;
+    /* Ensure normal weight */
+    color: #555;
+    /* Slightly softer text */
+    line-height: 1.6;
+}
+
+/* Dark mode adjustment */
+body.dark-mode #modalDescription {
+    color: #ddd;
+}
+
+/* Links */
+#modalLinks a {
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+#modalLinks a:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+/* =========================================
+   Dark Mode Implementation
+   ========================================= */
+
+body.dark-mode {
+    background-color: #28282b;
+    color: #FDFBF9;
+}
+
+/* Dark Mode - Modal */
+body.dark-mode .modal-content {
+    background-color: #333336;
+    /* Slightly lighter than body for contrast */
+    color: #FDFBF9;
+}
+
+body.dark-mode .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    /* Make close button white */
+}
+
+body.dark-mode #modalLinks a {
+    color: #FDFBF9;
+    border-color: #555;
+    background-color: transparent;
+}
+
+body.dark-mode #modalLinks a:hover {
+    background-color: #444;
+}
+
+body.dark-mode .text-muted {
+    color: #b0b0b0 !important;
+}
+
+/* Dark Mode - Mobile Navbar Overlay */
+body.dark-mode .mobile-menu-overlay {
+    background: rgba(40, 40, 43, 0.95);
+    /* Dark background with opacity */
+}
+
+body.dark-mode .mobile-nav-link {
+    color: #FDFBF9;
+}
+
+body.dark-mode .menu-toggle .bar {
+    background-color: #FDFBF9;
+}
+
+/* Dark Mode - Post Cards */
+body.dark-mode .post-card {
+    background-color: #333336;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .post-card-text {
+    /* Text is usually white on the overlay anyway, but ensure it */
+    color: #fff;
+}
